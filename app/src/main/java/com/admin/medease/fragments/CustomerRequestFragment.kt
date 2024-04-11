@@ -59,12 +59,14 @@ class CustomerRequestFragment : Fragment() {
                         userModel?.let { prescriptionModelList.add(it) }
                         Log.e("", "userModelList ${prescriptionModelList}")
                         Log.e("", "userModelListadded ${userModel}")
+                        categoriesAdapter.notifyDataSetChanged()
                     }
                     DocumentChange.Type.MODIFIED -> {
                         userModel?.let {
                             var index = getIndex(userModel)
                             if (index > -1)
                                 prescriptionModelList.set(index, it)
+                            categoriesAdapter.notifyDataSetChanged()
                         }
                     }
                     DocumentChange.Type.REMOVED -> {
@@ -72,10 +74,11 @@ class CustomerRequestFragment : Fragment() {
                             var index = getIndex(userModel)
                             if (index > -1)
                                 prescriptionModelList.removeAt(index)
+                            categoriesAdapter.notifyDataSetChanged()
                         }
                     }
                 }
-                categoriesAdapter.notifyDataSetChanged()
+
             }
         }
 

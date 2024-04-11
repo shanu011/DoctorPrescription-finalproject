@@ -169,7 +169,7 @@ class AdminDoctorListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        progressBar=binding.pbar
+
 
 
         binding.fabAdd.setOnClickListener {

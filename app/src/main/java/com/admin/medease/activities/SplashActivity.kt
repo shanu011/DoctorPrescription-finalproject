@@ -28,26 +28,26 @@ class SplashActivity : AppCompatActivity() {
             {
                 mAuth = FirebaseAuth.getInstance()
                 // Check if a user is currently logged in
-                val currentUser = mAuth.currentUser
-                if (currentUser != null) {
-                    // User is logged in, you can access the user details
-                    val userId = currentUser.uid
-                    val userEmail = currentUser.email
-                    // ... other user details
-                    startActivity(Intent(this,DoctorPrescriptionActivity::class.java))
-                    finish()
-
-                    // Example: Display a welcome message
-                    Toast.makeText(
-                        this,
-                        "Welcome, $userEmail!",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                } else {
+//                val currentUser = mAuth.currentUser
+//                if (currentUser != null) {
+//                    // User is logged in, you can access the user details
+//                    val userId = currentUser.uid
+//                    val userEmail = currentUser.email
+//                    // ... other user details
+//                    startActivity(Intent(this,DoctorPrescriptionActivity::class.java))
+//                    finish()
+//
+//                    // Example: Display a welcome message
+//                    Toast.makeText(
+//                        this,
+//                        "Welcome, $userEmail!",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+//                } else {
                     // No user is currently logged in, redirect to the login screen
                     startActivity(Intent(this, DoctorLoginActivity::class.java))
                     finish() // Close MainActivity to prevent going back to it after login
-                }
+
 //            val intent = Intent(this, LoginActivity::class.java)
 //            startActivity(intent)
 //            finish()

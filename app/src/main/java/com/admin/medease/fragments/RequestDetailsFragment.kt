@@ -10,6 +10,8 @@ import android.widget.ProgressBar
 import com.bumptech.glide.Glide
 import com.admin.medease.Constants
 import com.admin.medease.R
+import com.admin.medease.activities.DoctorPrescriptionActivity
+import com.admin.medease.activities.MainActivity
 import com.admin.medease.databinding.FragmentRequestDetailsBinding
 import com.admin.medease.models.CustomerRegisterModel
 import com.admin.medease.models.PrescriptionModel
@@ -27,11 +29,12 @@ class RequestDetailsFragment : Fragment() {
     var DoctorAuthid=""
     var progressBar: ProgressBar?=null
     var preObjectModel: PrescriptionModel?=null
+    lateinit var mainActivity: DoctorPrescriptionActivity
     private val TAG = FragmentRequestDetailsBinding::class.java.canonicalName
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        mainActivity = activity as DoctorPrescriptionActivity
         progressBar = ProgressBar(requireContext(), null, android.R.attr.progressBarStyleSmall)
 
         progressBar?.visibility=View.GONE
@@ -58,33 +61,9 @@ class RequestDetailsFragment : Fragment() {
                 binding.tvEmail.setText(userModel?.useremail)
 
             }
-
         }
 
-        db.collection(Constants.prescription).document(prescriptionId)
-            .addSnapshotListener{snapshots,e->
-                if (e != null){
-                    return@addSnapshotListener
-                }
 
-                var model = snapshots?.toObject(PrescriptionModel::class.java)
-                Log.e("model", "onCreate: $model")
-                binding.tvproblem.setText(model?.customerProblems)
-                binding.tvName.setText(model?.e)
-                Glide
-                    .with(requireContext())
-                    .load(model?.customerImage)
-                    .centerCrop()
-                    .placeholder(R.drawable.ic_launcher_background)
-                    .into(binding.imgCustomerProblem)
-                binding.tvSolution.setText(model?.doctorSolution)
-                Glide
-                    .with(requireContext())
-                    .load(model?.doctotrImage)
-                    .centerCrop()
-                    .placeholder(R.drawable.ic_launcher_background)
-                    .into(binding.imgdoctorSolution)
-            }
 
 
 
@@ -95,6 +74,30 @@ class RequestDetailsFragment : Fragment() {
     ): View? {
         binding= FragmentRequestDetailsBinding.inflate(layoutInflater)
         // Inflate the layout for this fragment
+        db.collection(Constants.prescription).document(prescriptionId)
+            .addSnapshotListener{snapshots,e->
+                if (e != null){
+                    return@addSnapshotListener
+                }
+
+                var model = snapshots?.toObject(PrescriptionModel::class.java)
+                Log.e("model", "onCreate: $model")
+                binding.tvproblem.setText(model?.customerProblems)
+//                binding.tvName.setText(model?.e)
+                Glide
+                    .with(mainActivity)
+                    .load(model?.customerImage)
+                    .centerCrop()
+                    .placeholder(R.drawable.ic_launcher_background)
+                    .into(binding.imgCustomerProblem)
+                binding.tvSolution.setText(model?.doctorSolution)
+                Glide
+                    .with(mainActivity)
+                    .load(model?.doctotrImage)
+                    .centerCrop()
+                    .placeholder(R.drawable.ic_launcher_background)
+                    .into(binding.imgdoctorSolution)
+            }
         return (binding.root)
     }
 

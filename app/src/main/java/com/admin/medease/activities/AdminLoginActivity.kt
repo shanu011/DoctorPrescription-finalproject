@@ -3,6 +3,7 @@ package com.admin.medease.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import com.admin.medease.databinding.ActivityAdminLoginBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.ktx.auth
@@ -22,7 +23,11 @@ class AdminLoginActivity : AppCompatActivity() {
             if (binding.edtemail.text.isNullOrEmpty()) {
                 binding.tilemail.isErrorEnabled = true
                 binding.tilemail.error = "Enter Email"
-            } else if (binding.edtPassword.text.isNullOrEmpty()) {
+            } else  if (!isEmailValid(binding.edtemail.text.toString())) {
+                binding.tilemail.isErrorEnabled = true
+                binding.tilemail.error = "Enter Valid Email"
+            } else
+                if (binding.edtPassword.text.isNullOrEmpty()) {
                 binding.tilPassword.isErrorEnabled = true
                 binding.tilPassword.error = "Enter password"
             } else {
@@ -55,5 +60,26 @@ class AdminLoginActivity : AppCompatActivity() {
                 }
             }
         }
+        binding.tvForgetPassword.setOnClickListener {
+            if(binding.edtemail.text.isNullOrEmpty()){
+                binding.tilemail.error = "Enter Email"
+            }else  if (!isEmailValid(binding.edtemail.text.toString())) {
+                binding.tilemail.isErrorEnabled = true
+                binding.tilemail.error = "Enter Valid Email"
+            }else{
+                mAuth.sendPasswordResetEmail(binding.edtemail.text.toString()).addOnCompleteListener {
+                    if(it.isSuccessful){
+                        Toast.makeText(this,"Mail Sent", Toast.LENGTH_SHORT).show()
+                    }else{
+                        Toast.makeText(this,"NetWork Issue", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+    }
+
+    fun isEmailValid(email: String): Boolean {
+        val emailRegex = Regex("^[A-Za-z](.*)([@]{1})(.{1,})(\\.)(.{1,})")
+        return emailRegex.matches(email)
     }
 }
