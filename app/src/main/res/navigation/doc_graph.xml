@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/customerRequestFragment">
+    <fragment
+        android:id="@+id/customerRequestFragment"
+        android:name="com.admin.medease.fragments.CustomerRequestFragment"
+        android:label="fragment_customer_request"
+        tools:layout="@layout/fragment_customer_request" />
+
+    <fragment
+        android:id="@+id/requestDetailsFragment2"
+        android:name="com.admin.medease.fragments.RequestDetailsFragment"
+        android:label="fragment_request_details"
+        tools:layout="@layout/fragment_request_details" />
+    <fragment
+        android:id="@+id/requestUpdateFragment"
+        android:name="com.admin.medease.fragments.RequestUpdateFragment"
+        android:label="fragment_request_update"
+        tools:layout="@layout/fragment_request_update" />
+</navigation>
